@@ -1,0 +1,103 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="util.onBack()">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{util.translate('Analytics')}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label> {{util.translate('From Date')}} </ion-label>
+    <ion-input type="date" [(ngModel)]="from"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label> {{util.translate('To Date')}} </ion-label>
+    <ion-input type="date" [(ngModel)]="to"></ion-input>
+  </ion-item>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button (click)="getStats()" expand="block" fill="outline" size="small">
+        {{util.translate('Get Stats')}}
+      </ion-button>
+    </ion-col>
+
+  </ion-row>
+  <div *ngIf="from && to && storeOrder?.length && apiCalled" #invoiceTicket>
+    <h4 style="text-align: center;color: #7ec6aa;font-size: 14px;font-family: 'bold';">{{util.general.name}} </h4>
+    <p style="text-align: center;color: #ED7669;font-size: 12px;">{{getDate(from)}} {{util.translate('to')}}
+      {{getDate(to)}}</p>
+    <p style="text-align: right;font-family: 'bold';margin: 0px !important;color: #7EC6AA;font-size: 12px;">
+      {{util.general.name}}</p>
+    <p style="text-align: right;font-family: 'bold';margin: 0px !important;font-size: 12px;">
+      {{util.general.address}} <br> {{util.general.city}} {{util.general.state}}<br>
+      {{util.general.country}} {{util.general.zip}}
+    </p>
+    <p style="text-align: right;font-family: 'bold';margin: 0px !important;font-size: 12px;">{{util.general.email}}</p>
+    <p style="text-align: right;font-family: 'bold';margin: 0px !important;font-size: 12px;">{{util.general.mobile}}</p>
+    <p style="text-align: left; font-family: 'bold';color: #7EC6AA;font-size: 12px;">{{today()}}</p>
+    <ion-row>
+      <ion-col size="3"></ion-col>
+      <ion-col size="5">
+        <p
+          style="text-align: right;font-family: 'bold';margin: 0px !important;color: #7EC6AA;font-size: 12px;font-family: 'bold';;">
+          {{util.translate('Total')}} </p>
+        <p
+          style="text-align: right;font-family: 'bold';margin: 0px !important;color: #7EC6AA;;font-size: 12px;font-family: 'bold';">
+          {{util.translate('Commission')}}
+        </p>
+        <p
+          style="text-align: right;font-family: 'bold';margin: 0px !important;color: #7EC6AA;font-size: 12px;font-family: 'bold';;">
+          {{util.translate('Amount Received')}}
+        </p>
+      </ion-col>
+      <ion-col size="4">
+        <p
+          style="color: black !important;margin: 0px !important;text-align: right;font-size: 12px;font-family: 'bold';">
+          {{util.currecny}}
+          {{totalAmount}}
+        </p>
+        <p
+          style="color: black !important; margin: 0px !important;text-align: right;font-size: 12px;font-family: 'bold';">
+          {{util.currecny}}
+          {{commisionAmount}}
+        </p>
+        <p
+          style="color: black !important;margin: 0px !important;text-align: right;font-size: 12px;font-family: 'bold';">
+          {{util.currecny}}
+          {{toPay}}</p>
+      </ion-col>
+    </ion-row>
+    <table class="table" style="font-size: 10px;width: 100%;text-align: center;">
+      <thead>
+        <tr class="text-uppercase" style="color:#7ec6aa ;">
+          <th> {{util.translate('Id')}} </th>
+          <th> {{util.translate('Ordered on')}} </th>
+          <th> {{util.translate('Items')}} </th>
+          <th> {{util.translate('Total')}} </th>
+          <th> {{util.translate('Commission')}} </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of storeOrder" style="background-color: #F5F8FA;">
+          <td>#{{item.id}}</td>
+          <td>{{item.date_time}}</td>
+          <td>
+            <div style="width: 120px !important; white-space: pre-wrap;">
+              <span *ngFor="let orders of item.orders;let i =index;">
+                {{orders.name}} <span *ngIf="item.orders.length -1 != i">,</span>
+              </span>
+            </div>
+          </td>
+
+          <td style="font-size: 8px;font-family: 'bold';"> {{util.currecny}} {{item.grand_total}}</td>
+          <td style="font-size: 8px;font-family: 'bold';">{{util.currecny}}{{getCommisions(item.grand_total)}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</ion-content>

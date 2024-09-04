@@ -1,0 +1,90 @@
+
+ion-item {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.delete_icn {
+  color: white;
+  font-family: "bold";
+}
+
+.mainContent {
+  .coverPlaceholder {
+    text-align: center;
+    padding: 60px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  .galleryPlaceholder {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 14px;
+    font-family: "bold";
+    color: black;
+  }
+
+  .name {
+    font-size: 12px;
+    font-family: "bold";
+    color: grey;
+  }
+
+  .coverReal {
+    margin-top: 10px;
+    width: 100%;
+    height: 150px;
+    border-radius: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .lbl {
+    color: var(--ion-color-dark);
+    margin: 10px 0px !important;
+    font-family: "bold";
+  }
+
+  .galleryReal {
+    width: 100%;
+    height: 90px;
+    border-radius: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  ion-button {
+    --border-radius: 5px;
+    font-family: "bold";
+    margin-top: 20px;
+  }
+
+  .price_lbl {
+    font-family: "bold";
+    font-size: 11px;
+
+    .original {
+      text-decoration: line-through;
+      font-size: 11px;
+    }
+
+    .sell {
+      font-family: "bold";
+    }
+
+    .dicount {
+      font-family: "bold";
+      font-size: 11px;
+    }
+  }
+}

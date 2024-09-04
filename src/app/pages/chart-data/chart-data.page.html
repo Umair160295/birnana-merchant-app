@@ -1,0 +1,90 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="primary">
+    <ion-title>{{util.translate('Chart View')}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="start" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main_content_div">
+    <div class="content_div">
+      <ion-label class="title_lbl">{{util.translate('Orders Trends')}} </ion-label>
+
+      <div class="color_flex">
+        <div class="color_div"></div>
+        <ion-label>{{util.translate('Total number of orders today')}} </ion-label>
+      </div>
+
+      <div style="display: block;">
+        <canvas baseChart [datasets]="barChartDataToday" [labels]="barChartLabelsToday" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="barChartType">
+        </canvas>
+      </div>
+
+      <div class="color_flex">
+        <div class="color_div"></div>
+        <ion-label>{{util.translate('Total number of orders this weeks')}} </ion-label>
+      </div>
+
+      <div style="display: block;">
+        <canvas baseChart [datasets]="barChartDataWeeks" [labels]="barChartLabelsWeeks" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="barChartType">
+        </canvas>
+      </div>
+
+      <div class="color_flex">
+        <div class="color_div"></div>
+        <ion-label>{{util.translate('Total number of orders this months')}} </ion-label>
+      </div>
+
+      <div style="display: block;">
+        <canvas baseChart [datasets]="barChartDataMonths" [labels]="barChartLabelsMonths" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="barChartType">
+        </canvas>
+      </div>
+
+
+    </div>
+    <div class="content_div">
+      <ion-label class="title_lbl" style="margin-bottom: 0px;">{{util.translate("Month's distribution of your orders")}}
+      </ion-label>
+      <ion-label class="span_lbl">{{util.translate("Details from")}}
+        <span>{{monthLabel}}</span>&nbsp;
+        <span>
+          <ion-icon name="caret-down-outline"></ion-icon>
+        </span>
+      </ion-label>
+
+      <ion-label class="no_lbl">
+        {{util.translate("Top Sells this months")}}
+      </ion-label>
+
+      <div class="chart_flex">
+        <div class="color_content" style="width: 50%;">
+
+          <div class="color_flex" *ngFor="let item of topProducts;">
+            <div class="color_div"></div>
+            <ion-label> {{item.items.name}} - ({{item.counts}}) </ion-label>
+          </div>
+
+        </div>
+        <div class="chart_div" style="width: 50%;">
+          <div style="display: block;">
+            <canvas baseChart [datasets]="doughnutChartData" [type]="doughnutChartType" [labels]="doughnutChartLabels">
+              [options]="barChartOptions"
+            </canvas>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="line_div"></div>
+
+    </div>
+  </div>
+</ion-content>

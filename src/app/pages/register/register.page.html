@@ -1,0 +1,155 @@
+
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Register Your Store')}} </ion-title>
+  </ion-toolbar>
+  <div class="stepper_div">
+    <div [class.active]="slideID >= 0"></div>
+    <div [class.active]="slideID >= 1"></div>
+    <div [class.active]="slideID >= 2"></div>
+    <div [class.active]="slideID >= 3"></div>
+  </div>
+</ion-header>
+<ion-content>
+  <div id="sign-in-button"></div>
+  <div class="main_content_div">
+    <swiper-container #swiper [slidesPerView]="1" [allowTouchMove]="false" (afterinit)="swiperReady()">
+      <swiper-slide>
+        <div class="slider_div">
+          <ion-row>
+            <ion-col size="3" (click)="openCountry()">
+              <ion-item>
+                <ion-input [(ngModel)]="loginWithPhoneOTP.country_code"  type="text" placeholder="+1">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="9">
+              <ion-item>
+                <ion-input [(ngModel)]="loginWithPhoneOTP.mobile" type="number" placeholder="*********"> </ion-input>
+              </ion-item>
+
+            </ion-col>
+          </ion-row>
+
+          <ion-button expand="block" mode="ios" shape="round" (click)="verifyPhone()">
+            {{util.translate('Verify Phone')}}
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider_div">
+          <ion-item>
+            <ion-label position="floating">{{util.translate('E-Mail')}} </ion-label>
+            <ion-input type="email" [(ngModel)]="email"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" mode="ios" shape="round" (click)="verifyEmail()">
+            {{util.translate('Verify E-mail')}}
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider_div">
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('First Name')}} </ion-label>
+            <ion-input type="text" [(ngModel)]="first_name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Last Name')}} </ion-label>
+            <ion-input type="text" [(ngModel)]="last_name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Password')}} </ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Confirm Password')}} </ion-label>
+            <ion-input type="password" [(ngModel)]="confirm_password"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" mode="ios" shape="round" (click)="saveBasic()">
+            {{util.translate('Continue')}}
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider_div">
+
+          <div class="user_img" [ngStyle]="{'background-image':'url('+api.mediaURL+store_cover+'),url(assets/bg.png)'}"
+            (click)="updateProfile()">
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Store Name')}} </ion-label>
+            <ion-input type="text" [(ngModel)]="store_name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Store Address')}} </ion-label>
+            <ion-textarea type="text" [(ngModel)]="store_address" rows="5"></ion-textarea>
+          </ion-item>
+
+          <p class="text-heler">{{util.translate('Select Latitude & Longitude From here:')}} <span (click)="openWeb()"
+              style="color: blue !important;">https://www.mapcoordinates.net/en</span>
+          </p>
+
+          <p class="text-heler">
+            {{util.translate('Please enter valid Latitude & Longitude otherwise app may not work properly.')}}
+          </p>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Store Latitude')}} </ion-label>
+            <ion-input type="text" [(ngModel)]="store_lat"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Store Longitude')}} </ion-label>
+            <ion-input type="text" [(ngModel)]="store_lng"></ion-input>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('ZipCode')}} </ion-label>
+            <ion-input type="text" [(ngModel)]="zipcode"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{util.translate('Choose City')}} </ion-label>
+            <ion-select [(ngModel)]="city_id" [placeholder]="util.translate('Choose City')">
+              <ion-select-option *ngFor="let item of util.servingCities" [value]="item.id">{{item.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item style="margin-top: 10px;">
+            <ion-label>{{util.translate('Open Time')}} </ion-label>
+            <ion-input type="time" [(ngModel)]="open_time"></ion-input>
+          </ion-item>
+
+          <ion-item style="margin-top: 10px;">
+            <ion-label>{{util.translate('Close Time')}} </ion-label>
+            <ion-input type="time" [(ngModel)]="close_time"></ion-input>
+          </ion-item>
+
+
+          <ion-button expand="block" mode="ios" shape="round" (click)="saveStoreInfo()">
+            {{util.translate('Continue')}}
+          </ion-button>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+
+  </div>
+</ion-content>

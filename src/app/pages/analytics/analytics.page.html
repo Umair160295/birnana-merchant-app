@@ -1,0 +1,322 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="light">
+    <ion-title>{{util.translate('Business Insights')}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onStats()">
+        <ion-icon slot="start" name="filter-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div class="main_content_div">
+    <ion-select placeholder="Select One" (ionChange)="selectionChanged($event)" [(ngModel)]="selectedValue" class="ion-padding-start">
+      <ion-select-option value="today">Today</ion-select-option>
+      <ion-select-option value="week">This Week</ion-select-option>
+      <ion-select-option value="month">This Month</ion-select-option>
+    </ion-select>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card class="total-sales-card">
+          <ion-card-header>
+            <div class="total-sales-icon">
+              <img src="assets/imgs/analytics-icon/total-income-icon.png" class="t-icon" height="15px" width="22px"/>
+            </div>
+          </ion-card-header>  
+          <ion-card-content>
+            <h1 *ngIf="showGraph == 'today'">{{util.currecny}} {{todayStates.total}}</h1>
+            <h1 *ngIf="showGraph == 'week'">{{util.currecny}} {{weeekStates.total}}</h1>
+            <h1 *ngIf="showGraph == 'month'">{{util.currecny}} {{monthStats.total}}</h1>
+            <p>Total Income </p> 
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="gross-sales-card">
+          <ion-card-header>
+            <div class="gross-sales-icon">
+              <img src="assets/imgs/analytics-icon/order-icon.png" class="icon" height="18px" width="18px"/>
+            </div>
+          </ion-card-header>      
+          <ion-card-content> 
+            <h1 *ngIf="showGraph == 'today'">{{todayStatesRejected.totalSold}}</h1>
+            <h1 *ngIf="showGraph == 'week'">{{weeekStatesRejected.totalSold}}</h1>
+            <h1 *ngIf="showGraph == 'month'">{{monthStatsRejected.totalSold}}</h1>
+            <p>Orders Rejected</p> 
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="total-sold-items-card">
+          <ion-card-header>
+            <div class="total-sold-icon">
+              <img src="assets/imgs/analytics-icon/sold-items-icon.png" class="ts-icon" height="20px" width="20px"/>
+            </div>
+           
+          </ion-card-header>    
+          <ion-card-content> 
+            <h1 *ngIf="showGraph == 'today'">{{todayStates.totalItemsSold}}</h1>
+            <h1 *ngIf="showGraph == 'week'">{{weeekStates.totalItemsSold}}</h1>
+            <h1 *ngIf="showGraph == 'month'">{{monthStats.totalItemsSold}}</h1>
+           <p>Sold Items </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="total-orders-card">
+          <ion-card-header>
+            <div class="total-orders-icon">
+              <img src="assets/imgs/analytics-icon/order-icon.png" class="icon" height="18px" width="18px"/>
+            </div>
+          
+          </ion-card-header> 
+          <ion-card-content>
+            <h1 *ngIf="showGraph == 'today'">{{todayStates.totalSold}}</h1>
+            <h1 *ngIf="showGraph == 'week'">{{weeekStates.totalSold}}</h1>
+            <h1 *ngIf="showGraph == 'month'">{{monthStats.totalSold}}</h1>
+            <p>Order Delivered </p> 
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <div class="content_div" >
+      <div class="color_flex" *ngIf="isShown && showGraph == 'today'">
+        <div class="color_div"></div>
+        <ion-label>{{util.translate('Total number of orders today')}} </ion-label>
+      </div>
+
+      <div style="display: block;" *ngIf="isShown && showGraph == 'today'">
+        <canvas baseChart [datasets]="barChartDataToday" [labels]="barChartLabelsToday" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="barChartType">
+        </canvas>
+      </div>
+
+      <div class="color_flex" *ngIf="isShown && showGraph == 'week'">
+        <div class="color_div"></div>
+        <ion-label>{{util.translate('Total number of orders this weeks')}} </ion-label>
+      </div>
+      <div style="display: block;" *ngIf="isShown && showGraph == 'week'">
+        <canvas baseChart [datasets]="barChartDataWeeks" [labels]="barChartLabelsWeeks" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="barChartType">
+        </canvas>
+      </div>
+      
+      <div class="color_flex" *ngIf="isShown && showGraph == 'month'">
+        <div class="color_div"></div>
+        <ion-label>{{util.translate('Total number of orders this months')}} </ion-label>
+      </div>
+
+      <div style="display: block;" *ngIf="isShown && showGraph == 'month'">
+        <canvas baseChart [datasets]="barChartDataMonths" [labels]="barChartLabelsMonths" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="barChartType">
+        </canvas>
+      </div>
+    </div>
+ <!--   <div class="title_flex">
+        <ion-label class="title_lbl">{{util.translate('Delivered Orders')}} </ion-label>
+        <div (click)="openChart()">
+          <ion-label class="color_lbl">{{util.translate('Check Chart')}} </ion-label>
+          <ion-icon name="bar-chart-outline"></ion-icon>
+        </div>
+      </div>
+      <div class="slide_div">
+        <div style="border-bottom: 1px solid white;">
+          <ion-label class="simp_lbl">{{util.translate('Today')}} : {{todayStates.label}} </ion-label>
+          <ion-label class="bold_lbl">
+            <span *ngIf="util.cside =='left'">
+              {{util.currecny}} {{todayStates.total}}
+            </span>
+            <span *ngIf="util.cside =='right'">
+              {{todayStates.total}} {{util.currecny}}
+            </span>
+          </ion-label>
+          <ion-label class="simp_lbl"> {{todayStates.totalSold}} {{util.translate('Items Sold')}} </ion-label>
+        </div>
+
+        <ion-row>
+          <ion-col size="6" style="padding: 0px;">
+            <div style="border-right: 1px solid white;">
+              <ion-label class="simp_lbl">{{util.translate('This Week')}} : {{weeekStates.label}} </ion-label>
+              <ion-label class="bold_lbl">
+                <span *ngIf="util.cside =='left'">
+                  {{util.currecny}} {{weeekStates.total}}
+                </span>
+                <span *ngIf="util.cside =='right'">
+                  {{weeekStates.total}} {{util.currecny}}
+                </span>
+              </ion-label>
+              <ion-label class="simp_lbl">{{weeekStates.totalSold}} {{util.translate('Orders')}} </ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px;">
+            <div>
+              <ion-label class="simp_lbl">{{util.translate('This Month')}} :{{monthStats.label}}</ion-label>
+              <ion-label class="bold_lbl">
+                <span *ngIf="util.cside =='left'">
+                  {{util.currecny}} {{monthStats.total}}
+                </span>
+                <span *ngIf="util.cside =='right'">
+                  {{monthStats.total}} {{util.currecny}}
+                </span>
+              </ion-label>
+              <ion-label class="simp_lbl">{{monthStats.totalSold}} {{util.translate('Orders')}} </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+      <div class="blue_div">
+        <ion-label class="bold_lbl">{{util.translate('Get more orders from')}} {{util.appName}}</ion-label>
+        <ion-label class="small_lbl">
+          {{util.translate('Items with images lead to more orders compared to items without them. Check your competitor item prices')}}
+        </ion-label>
+      </div> -->
+
+    <!-- <div class="content_div">
+      <div class="title_flex" style="margin-bottom: 0px;">
+        <ion-label class="title_lbl">{{util.translate('Rejected Orders')}} </ion-label>
+        <div (click)="openChart()">
+          <ion-label class="color_lbl">{{util.translate('Check Chart')}} </ion-label>
+          <ion-icon name="bar-chart-outline"></ion-icon>
+        </div>
+      </div>
+      <ion-label class="span_lbl">{{util.translate('Lost sales from orders rejected by you or cancelled')}} </ion-label>
+
+
+      <div class="border_slider_div">
+        <div style="border-bottom: 1px solid lightgrey;">
+          <ion-label class="simp_lbl">{{util.translate('Today')}} : {{todayStates.label}} </ion-label>
+          <ion-label class="bold_lbl">
+            <span *ngIf="util.cside =='left'">
+              {{util.currecny}} {{todayStatesRejected.total}}
+            </span>
+            <span *ngIf="util.cside =='right'">
+              {{todayStatesRejected.total}} {{util.currecny}}
+            </span>
+          </ion-label>
+          <ion-label class="simp_lbl">{{todayStatesRejected.totalSold}} {{util.translate('Orders')}} </ion-label>
+        </div>
+
+        <ion-row>
+          <ion-col size="6" style="padding: 0px;">
+            <div style="border-right: 1px solid lightgrey;">
+              <ion-label class="simp_lbl">{{util.translate('This Week')}} : {{weeekStates.label}} </ion-label>
+              <ion-label class="bold_lbl">
+                <span *ngIf="util.cside =='left'">
+                  {{util.currecny}} {{weeekStatesRejected.total}}
+                </span>
+                <span *ngIf="util.cside =='right'">
+                  {{weeekStatesRejected.total}} {{util.currecny}}
+                </span>
+              </ion-label>
+              <ion-label class="simp_lbl">{{weeekStatesRejected.totalSold}} {{util.translate('Orders')}} </ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="6" style="padding: 0px;">
+            <div>
+              <ion-label class="simp_lbl">{{util.translate('This Month')}} : {{monthStats.label}}</ion-label>
+              <ion-label class="bold_lbl">
+                <span *ngIf="util.cside =='left'">
+                  {{util.currecny}} {{monthStatsRejected.total}}
+                </span>
+                <span *ngIf="util.cside =='right'">
+                  {{monthStatsRejected.total}} {{util.currecny}}
+                </span>
+              </ion-label>
+              <ion-label class="simp_lbl">{{monthStatsRejected.totalSold}} {{util.translate('Orders')}} </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+      <div class="blue_div">
+        <ion-label class="bold_lbl">
+          <span *ngIf="monthStatsRejected.totalSold <=2 || monthStatsRejected.totalSold == 0">
+            {{util.translate('Great Work!')}} </span>
+          <span *ngIf="monthStatsRejected.totalSold >10">{{util.translate('Improve yourself')}} </span>
+        </ion-label>
+        <ion-label class="small_lbl">
+          <span *ngIf="monthStatsRejected.totalSold <=2 || monthStatsRejected.totalSold == 0">
+            {{util.translate('You have accepted all orders till now in this month')}}
+          </span>
+          <span *ngIf="monthStatsRejected.totalSold >10">
+            {{util.translate("You have some rejected and cancelled orders on your current month's stats, this will impact on your future sells, improve your self")}}
+          </span>
+        </ion-label>
+      </div>
+
+    </div> 
+
+    <div class="content_div">
+      <div class="title_flex" style="margin-bottom: 0px;">
+        <ion-label class="title_lbl">{{util.translate('Customer complaints')}} </ion-label>
+      </div>
+      <ion-label class="span_lbl">{{util.translate('Details from')}}
+        <span> {{monthStats.label}} </span>&nbsp;
+        <span>
+          <ion-icon name="caret-down-outline"></ion-icon>
+        </span>
+      </ion-label>
+
+      <div class="border_div">
+        <div class="inner_content inner_flex" *ngFor="let item of complaints">
+          <ion-label class="small_lbl">{{util.translate(reasons[item.reason_id])}}
+            <br>
+            <span style="font-size: 10px;"> {{item.short_message}} </span>
+          </ion-label>
+          <ion-label class="small_lbl"> #{{item.order_id}}</ion-label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="content_div">
+      <div class="title_flex" style="margin-bottom: 0px;">
+        <ion-label class="title_lbl">{{util.translate('Top Items in your store')}} </ion-label>
+      </div>
+      <ion-label class="span_lbl">{{util.translate('Details from')}}
+        <span>{{monthStats.label}}</span>&nbsp;
+        <span>
+          <ion-icon name="caret-down-outline"></ion-icon>
+        </span>
+      </ion-label>
+
+      <div class="row_flex">
+        <div class="f_div" style="background: #f6f6f6;">
+          <ion-label>{{util.translate('Store Items')}} </ion-label>
+        </div>
+
+        <div class="l_div" style="background: #f6f6f6;">
+          <ion-label>{{util.translate('Quantity Sold')}} </ion-label>
+        </div>
+      </div>
+
+      <div class="row_flex" *ngFor="let item of topProducts">
+        <div class="f_div">
+          <ion-label>{{item.items.name}}</ion-label>
+        </div>
+
+        <div class="l_div">
+          <ion-label>{{item.counts}}</ion-label>
+        </div>
+      </div>
+
+      <div class="blue_div" style="margin-top: 20px;">
+        <ion-label class="bold_lbl">{{util.translate('Run promotions to get more orders')}} </ion-label>
+        <ion-label class="small_lbl">
+          {{util.translate('Set campaigns on your own and offer customized discounts to give a further boost to your sales.')}}
+        </ion-label>
+        <ion-button mode="ios">
+          <ion-icon slot="end" name="caret-forward-outline"></ion-icon>
+          {{util.translate('Start a promo')}}
+        </ion-button>
+      </div>
+
+    </div>-->
+
+  </div>
+</ion-content>

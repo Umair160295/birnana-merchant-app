@@ -1,0 +1,273 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="isNew"> {{util.translate('Create Product')}} </ion-title>
+    <ion-title *ngIf="!isNew"> {{util.translate('Update Product')}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="mainContent">
+    <ion-list lines="none">
+
+      <ion-item (click)="openCate()">
+        <ion-label class="title">{{util.translate('Category')}} <br>
+          <span class="name" *ngIf="!cateName"> {{util.translate('Select Category')}} </span>
+          <span class="name" *ngIf="cateName">{{cateName}}</span>
+        </ion-label>
+      </ion-item>
+
+      <ion-item (click)="openSub()">
+        <ion-label class="title"> {{util.translate('Sub Category')}} <br>
+          <span class="name" *ngIf="!subName"> {{util.translate('Select Sub Category')}} </span>
+          <span class="name" *ngIf="subName">{{subName}}</span>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> {{util.translate('Product name')}} </ion-label>
+        <ion-input [(ngModel)]="name" type="text" [placeholder]="util.translate('Product name')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> {{util.translate('Product price')}} </ion-label>
+        <ion-input [(ngModel)]="realPrice" type="number" (ionChange)="onRealPrice($event)"
+          [placeholder]="util.translate('Product Price')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> {{util.translate('Discount %')}} </ion-label>
+        <ion-input [(ngModel)]="discount" (ionChange)="onDicount($event)" type="number"
+          [placeholder]="util.translate('Discount %')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> {{util.translate('Sell Price')}} </ion-label>
+        <ion-input [(ngModel)]="sellPrice" disabled="true" type="number" [placeholder]="util.translate('Sell Price')">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea [placeholder]="util.translate('Description')" [(ngModel)]="description" rows="5"></ion-textarea>
+      </ion-item>
+
+
+      <ion-item lines="none">
+        <ion-label> {{util.translate('Status')}} </ion-label>
+        <ion-select [(ngModel)]="status" interface="popover" mode="ios" lines="none">
+          <ion-select-option value="1"> {{util.translate('Available')}} </ion-select-option>
+          <ion-select-option value="0"> {{util.translate('Hide')}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- New Update 2.0 -->
+      <ion-item lines="none">
+        <ion-label> {{util.translate('In Stock')}} </ion-label>
+        <ion-select [(ngModel)]="in_stoke" interface="popover" mode="ios" lines="none">
+          <ion-select-option value="1"> {{util.translate('In Stock')}} </ion-select-option>
+          <ion-select-option value="0"> {{util.translate('Out of Stock')}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <!-- New Update 2.0 -->
+
+      <ion-item>
+        <ion-label> {{util.translate('Veg')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="veg"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('Is Single')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="is_single"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('In Offer')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="in_offer"></ion-toggle>
+      </ion-item>
+
+      <div class="coverPlaceholder" (click)="cover()" *ngIf="!coverImage || coverImage ==''">
+        <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+        <p> {{util.translate('Upload products cover image here')}} </p>
+      </div>
+
+      <div class="coverReal" (click)="cover()" [style.backgroundImage]="'url('+api.mediaURL+ coverImage+')'"
+        *ngIf="coverImage && coverImage !=''">
+      </div>
+
+      <p class="lbl"> {{util.translate('Upload More Images')}} </p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <div class="galleryPlaceholder" (click)="others('1')" *ngIf="!image1 || image1 ==''">
+              <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+              <p> {{util.translate('Image 1')}} </p>
+            </div>
+            <div class="galleryReal" (click)="others('1')" [style.backgroundImage]="'url('+api.mediaURL+image1+')'"
+              *ngIf="image1 && image1 !=''">
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="galleryPlaceholder" (click)="others('2')" *ngIf="!image2 || image2 ==''">
+              <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+              <p>{{util.translate('Image 2')}}</p>
+            </div>
+            <div class="galleryReal" (click)="others('2')" [style.backgroundImage]="'url('+api.mediaURL+image2+')'"
+              *ngIf="image2 && image2 !=''">
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="galleryPlaceholder" (click)="others('3')" *ngIf="!image3 || image3 ==''">
+              <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+              <p>{{util.translate('Image 3')}}</p>
+            </div>
+            <div class="galleryReal" (click)="others('3')" [style.backgroundImage]="'url('+api.mediaURL+image3+')'"
+              *ngIf="image3 && image3 !=''">
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="galleryPlaceholder" (click)="others('4')" *ngIf="!image4 || image4 ==''">
+              <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+              <p>{{util.translate('Image 4')}}</p>
+            </div>
+            <div class="galleryReal" (click)="others('4')" [style.backgroundImage]="'url('+api.mediaURL+image4+')'"
+              *ngIf="image4 && image4 !=''">
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="galleryPlaceholder" (click)="others('5')" *ngIf="!image5 || image5 ==''">
+              <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+              <p>{{util.translate('Image 5')}}</p>
+            </div>
+            <div class="galleryReal" (click)="others('5')" [style.backgroundImage]="'url('+api.mediaURL+image5+')'"
+              *ngIf="image5 && image5 !=''">
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="galleryPlaceholder" (click)="others('6')" *ngIf="!image6 || image6 ==''">
+              <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+              <p>{{util.translate('Image 6')}}</p>
+            </div>
+            <div class="galleryReal" (click)="others('6')" [style.backgroundImage]="'url('+api.mediaURL+image6+')'"
+              *ngIf="image6 && image6 !=''">
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-item>
+        <ion-label> {{util.translate('In Gram')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="have_gram"></ion-toggle>
+      </ion-item>
+
+      <ion-item *ngIf="have_gram">
+        <ion-label position="floating"> {{util.translate('Gram value')}} </ion-label>
+        <ion-input [(ngModel)]="gram" type="number" [placeholder]="util.translate('Gram value')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('In KG')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="have_kg"></ion-toggle>
+      </ion-item>
+
+      <ion-item *ngIf="have_kg">
+        <ion-label position="floating"> {{util.translate('KG value')}} </ion-label>
+        <ion-input [(ngModel)]="kg" type="number" [placeholder]="util.translate('KG value')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('In Liter')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="have_liter"></ion-toggle>
+      </ion-item>
+
+      <ion-item *ngIf="have_liter">
+        <ion-label position="floating"> {{util.translate('Liter value')}} </ion-label>
+        <ion-input [(ngModel)]="liter" type="number" [placeholder]="util.translate('Liter value')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('In PCs')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="have_pcs"></ion-toggle>
+      </ion-item>
+
+      <ion-item *ngIf="have_pcs">
+        <ion-label position="floating"> {{util.translate('PCs value')}} </ion-label>
+        <ion-input [(ngModel)]="pcs" type="number" [placeholder]="util.translate('PCs value')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('In ML')}} </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="have_ml"></ion-toggle>
+      </ion-item>
+
+      <ion-item *ngIf="have_ml">
+        <ion-label position="floating"> {{util.translate('ML value')}} </ion-label>
+        <ion-input [(ngModel)]="ml" type="number" [placeholder]="util.translate('ML value')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> {{util.translate('Expire Date')}} </ion-label>
+        <ion-input type="date" displayFormat="DD-MM-YYYY" [(ngModel)]="exp_date" [min]="minEndDate()"
+          [max]="getMaxDate()"></ion-input>
+        <!-- <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="exp_date" [min]="minEndDate()" [max]="getMaxDate()">
+        </ion-datetime> -->
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="barcode" type="text" [placeholder]="util.translate('Enter BarCode')"></ion-input>
+        <ion-icon name="barcode-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-textarea [placeholder]="util.translate('Key Features')" [(ngModel)]="key_features" rows="5"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea [placeholder]="util.translate('Disclaimer')" [(ngModel)]="disclaimer" rows="5"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Size?</ion-label>
+        <ion-toggle slot="end" (ionChange)="changeSize($event)" [(ngModel)]="size"></ion-toggle>
+      </ion-item>
+
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of variations;let i = index;">
+          <ion-item class="noLines">
+            <ion-label>{{item.title}}</ion-label>
+            <ion-icon name="create-outline" slot="end" *ngIf="item.title !='size'" (click)="editTitle(i)"></ion-icon>
+            <ion-icon name="add-circle" slot="end" (click)="addItem(i)"></ion-icon>
+            <ion-icon name="trash" slot="end" (click)="delete(item)"></ion-icon>
+          </ion-item>
+          <ion-item *ngFor="let sub of item.items;let j = index" class="sub" lines="nones">
+            <ion-label>{{sub.title}}
+              <ion-label *ngIf="sub.discount == 0 || sub.discount =='0'">
+                <span *ngIf="util.cside =='right'"> {{sub.price}} {{util.currecny}}</span>
+                <span *ngIf="util.cside =='left'">{{util.currecny}} {{sub.price}} </span>
+              </ion-label>
+              <ion-label class="price_lbl" *ngIf="sub.discount != 0 && sub.discount !='0'">
+                <span class="original" *ngIf="util.cside =='left'"> {{util.currecny}} {{sub.price}} </span>
+                <span class="sell" *ngIf="util.cside =='left'">{{util.currecny}} {{sub.discount}} </span>
+                <span class="original" *ngIf="util.cside =='right'"> {{sub.price}} {{util.currecny}}</span>
+                <span class="sell" *ngIf="util.cside =='right'"> {{sub.discount}} {{util.currecny}}</span>
+              </ion-label>
+            </ion-label>
+            <ion-icon name="create-outline" slot="end" (click)="editSub(i,sub,j)"></ion-icon>
+            <ion-icon name="trash-outline" slot="end" (click)="deleteSub(i,sub)"></ion-icon>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+
+    </ion-list>
+    <ion-button expand="block" (click)="scan()" [disabled]="!isSupported"
+    >Scan</ion-button
+  >
+    <ion-button (click)="submit()" expand="block" shape="round">
+      {{util.translate('Submit')}}
+    </ion-button>
+  </div>
+
+
+</ion-content>

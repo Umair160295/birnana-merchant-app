@@ -1,0 +1,109 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="t">{{util.translate('Profile')}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main_content_div">
+
+    <div class="main_div">
+
+
+      <div class="info_div">
+        <div class="user_img"
+          [ngStyle]="{'background-image':'url('+api.mediaURL+coverImage+'),url(assets/imgs/user.png)'}"
+          (click)="updateProfile()">
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Name')}} &nbsp; </span>
+            <ion-input type="text" [(ngModel)]="name">
+            </ion-input>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Mobile')}} &nbsp; </span>
+            <ion-input type="number" [(ngModel)]="mobile">
+            </ion-input>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Address')}} &nbsp; </span>
+            <ion-textarea type="text" rows="5" [(ngModel)]="address"></ion-textarea>
+          </div>
+        </div>
+
+        <p class="text-heler">{{util.translate("Select Latitude & Longitude From here:")}} <span (click)="openWeb()"
+            style="color: blue !important;">https://www.mapcoordinates.net/en</span>
+        </p>
+
+        <p class="text-heler">
+          {{util.translate("Please enter valid Latitude & Longitude otherwise app may not work properly.")}}
+        </p>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Latitude')}} &nbsp; </span>
+            <ion-input type="number" [(ngModel)]="latitude">
+            </ion-input>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Longitude')}} &nbsp; </span>
+            <ion-input type="number" [(ngModel)]="longitude">
+            </ion-input>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Description')}} &nbsp; </span>
+            <ion-textarea type="text" rows="5" [(ngModel)]="descritions">
+            </ion-textarea>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Open')}} &nbsp; </span>
+            <ion-input type="time" display-format="HH:mm:ss" [(ngModel)]="openTime"></ion-input>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="content_div">
+            <span>{{util.translate('Close')}} &nbsp; </span>
+            <ion-input type="time" display-format="HH:mm:ss" [(ngModel)]="closeTime"></ion-input>
+          </div>
+        </div>
+
+        <ion-button (click)="update()" expand="block" shape="round">
+          {{util.translate('Save')}}
+        </ion-button>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="12" class="ion-text-center">
+            <ion-button color="danger" expand="block" shape="round" fill="outline" (click)="deleteAccount()">
+              Delete My Account
+             </ion-button>
+          </ion-col>
+      
+        </ion-row>
+      </div>
+    </div>
+  </div>
+</ion-content>

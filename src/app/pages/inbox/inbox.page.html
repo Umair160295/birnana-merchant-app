@@ -1,0 +1,58 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{name}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!loaded" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+    <ion-spinner color="primary" name="crescent"></ion-spinner>
+  </div>
+  <ion-refresher slot="fixed" (ionRefresh)="getChatRooms($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="main_content_div" *ngIf="loaded">
+
+    <span *ngFor="let item of messageList">
+      <div class="left_div" *ngIf="item.from_id != uid">
+        <div class="inner_div">
+          <div class="msg_div">
+            <ion-label>{{item.message}}</ion-label>
+          </div>
+        </div>
+      </div>
+
+      <div class="right_div" *ngIf="item.from_id == uid">
+        <div class="inner_div">
+          <div class="msg_div">
+            <ion-label>{{item.message}}</ion-label>
+          </div>
+        </div>
+
+      </div>
+    </span>
+  </div>
+  <ion-infinite-scroll threshold="25%" [disabled]="true" position="bottom" (ionInfinite)="getChatRooms($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="util.translate('fetching chats')">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <div *ngIf="!yourMessage && loaded" style="display: flex;flex-direction: row-reverse;padding: 20px;">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="footer_div">
+    <ion-input type="text" [(ngModel)]="message" (keyup.enter)="sendMessage()"
+      [placeholder]="util.translate('Type Here..')"></ion-input>
+    <div class="chat_div" (click)="sendMessage()">
+      <ion-icon name="navigate"></ion-icon>
+    </div>
+  </div>
+</ion-footer>

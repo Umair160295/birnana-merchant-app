@@ -1,0 +1,256 @@
+
+.main_content_div {
+  .content_div {
+    padding: 16px;
+    background: white;
+    margin-bottom: 10px;
+
+    .title_flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+
+      .title_lbl {
+        font-size: 18px;
+        font-family: "semi-bold";
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+
+        ion-label {
+          font-size: 14px;
+          color: var(--ion-color-primary);
+        }
+
+        ion-icon {
+          margin-left: 5px;
+          color: var(--ion-color-primary);
+        }
+      }
+    }
+
+    .span_lbl {
+      font-size: 15px;
+
+      span {
+        color: var(--ion-color-primary);
+      }
+    }
+
+    .slide_div {
+      border-radius: 10px;
+      background: #0594aa;
+      width: 100%;
+      margin-bottom: 40px;
+
+      div {
+        padding: 10px;
+
+        .simp_lbl {
+          color: white;
+          text-align: left;
+          font-size: 14px;
+        }
+
+        .bold_lbl {
+          color: white;
+          font-family: "semi-bold";
+          font-size: 18px;
+          text-align: left;
+        }
+      }
+    }
+
+    .blue_div {
+      background: #394a84;
+      padding: 10px;
+      border-radius: 10px;
+
+      .bold_lbl {
+        color: white;
+        font-family: "medium";
+        margin-bottom: 8px;
+      }
+
+      .small_lbl {
+        color: white;
+        font-size: 13px;
+      }
+
+      ion-button {
+        --background: white;
+        color: black;
+        font-family: "medium";
+        --border-radius: 5px;
+        letter-spacing: 0.5px;
+        margin-top: 10px;
+      }
+    }
+
+    .border_slider_div {
+      border-radius: 10px;
+      border: 1px solid lightgrey;
+      margin-bottom: 40px;
+      width: 100%;
+
+      div {
+        padding: 10px;
+
+        .simp_lbl {
+          text-align: left;
+          font-size: 14px;
+        }
+
+        .bold_lbl {
+          font-family: "semi-bold";
+          font-size: 18px;
+          text-align: left;
+        }
+      }
+    }
+
+    .border_div {
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+      margin-bottom: 16px;
+
+      .inner_content {
+        padding: 10px;
+
+        .bold_lbl {
+          font-family: "medium";
+          margin-bottom: 10px;
+        }
+
+        .time_flex {
+          display: flex;
+          color: grey;
+
+          ion-icon {
+            margin-right: 5px;
+          }
+
+          div {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        .grey_lbl {
+          font-size: 14px;
+          color: grey;
+
+          span {
+            font-family: "medium";
+          }
+        }
+      }
+
+      .inner_flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .small_lbl {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .row_flex {
+      display: flex;
+      margin-left: -16px;
+      margin-right: -16px;
+
+      div {
+        padding: 16px 10px;
+      }
+
+      .f_div {
+        width: 50%;
+      }
+
+      .l_div {
+        width: 50%;
+      }
+
+      ion-label {
+        font-size: 14px;
+        color: grey;
+      }
+    }
+  }
+}
+ion-card {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  margin: 5px 10px 5px 10px;
+}
+ion-card-title,ion-card-subtitle{
+  color: white
+}
+.total-sales-card{
+  background: linear-gradient(180deg, #3E71E5 0%, #20A7DB 100%);
+  color: white;
+}
+.gross-sales-card{
+  background: linear-gradient(180deg, #831BEA 0%, rgba(0, 116, 201, 0.49) 118.06%, rgba(138, 42, 233, 0) 118.06%);
+  color: white;
+}
+.total-sold-items-card{
+  background: linear-gradient(180deg, #0B3F1E 0%, #2FA94E 100%);
+  color: white
+}
+.total-orders-card{
+  background: linear-gradient(180deg, #E79762 0%, #F87800 100%);
+  color: white;
+}
+.gross-sales-icon {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-position: 50% 50%;
+  background: linear-gradient(180deg, #831BEA 0%, rgba(0, 116, 201, 0.49) 118.06%, rgba(138, 42, 233, 0) 118.06%);
+  border-radius: 50%;
+}
+.total-sales-icon {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-position: 50% 50%;
+  background: linear-gradient(180deg, #0081F7 0%, #70C2E7 100%);
+
+  border-radius: 50%;
+}
+.total-sold-icon{
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-position: 50% 50%;
+  background: linear-gradient(180deg, #6DEA9B 0%, #1B4024 100%);
+
+  border-radius: 50%;
+}
+.total-orders-icon{
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-position: 50% 50%;
+  background: linear-gradient(180deg, #FFB800 0%, #E2B927 100%);
+
+  border-radius: 50%;
+}
+.icon{
+ margin:9px
+}
+.t-icon{
+  margin:10px 0px 0px 5px
+ }
+ .ts-icon{
+  margin:7px 0px 0px 8px
+ }

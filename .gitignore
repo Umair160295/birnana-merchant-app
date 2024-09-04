@@ -1,0 +1,40 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Capacitor directories
+android/
+ios/
+build/
+
+# Generated files
+www/
+platforms/
+plugins/
+.DS_Store
+
+# Angular specific files
+.angular/
+
+# IDE-specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs
+logs/
+*.log
+
+# macOS-specific files
+*.DS_Store
+
+# Environment variables
+.env
+.env.*

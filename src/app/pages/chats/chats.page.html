@@ -1,0 +1,54 @@
+
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Chats')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 class="ion-text-center" *ngIf="!dummy?.length && !list?.length"> {{util.translate('No Chats Found!')}}
+  </h2>
+  <div *ngFor="let item of dummy">
+    <ion-list lines="none">
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngFor="let item of list">
+    <ion-item *ngIf="uid == item.uid" class="ion-activatable ripple-parent"
+      (click)="openChat(item.participants,item.receiver_type,item.receiver_name +' '+ item.receiver_last_name)"
+      detail="">
+      <ion-avatar slot="start">
+        <img [src]="api.mediaURL+item.receiver_cover" onError="this.src='assets/imgs/logo_color.png'" />
+      </ion-avatar>
+      <ion-label> {{item.receiver_name +' '+ item.receiver_last_name}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item *ngIf="uid != item.uid" class="ion-activatable ripple-parent"
+      (click)="openChat(item.uid,item.sender_type,item.sender_first_name +' '+ item.sender_last_name)" detail="">
+      <ion-avatar slot="start">
+        <img [src]="api.mediaURL+item.sender_cover" onError="this.src='assets/imgs/logo_color.png'" />
+      </ion-avatar>
+      <ion-label> {{item.sender_first_name +' '+ item.sender_last_name}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+  </div>
+</ion-content>
